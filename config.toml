@@ -1,0 +1,15 @@
+baseURL = 'http://example.org/'
+languageCode = 'en-us'
+title = 'My New Hugo Site'
+theme = "paper-mod"
+
+[params]
+defaultTheme = "light"
+# defaultTheme: dark
+# defaultTheme: auto
+[params.homeInfoParams]
+Title = "Hi there wave"
+Content = "Can be Info, link"
+# [params.socialIcons]
+# name = "github"
+# url  = "https://github.com/marcelarie"
