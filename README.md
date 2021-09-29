@@ -1,2 +1,0 @@
-# marcelarie.github.io
-wip
