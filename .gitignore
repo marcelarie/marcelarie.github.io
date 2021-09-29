@@ -1,3 +1,3 @@
 # Hugo default output directory
-/public
-/docs
+#  /public
+#  /docs
