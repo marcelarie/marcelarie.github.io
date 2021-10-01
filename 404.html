@@ -10,7 +10,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="canonical" href="http://marcelarie.github.io/404.html" />
-<link crossorigin="anonymous" href="/assets/css/stylesheet.min.85f18502a83ff6eb3ae7039bcbf2cf874c903e2ad353d368c175a23c68a1aa18.css" integrity="sha256-hfGFAqg/9us65wOby/LPh0yQPirTU9NowXWiPGihqhg=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.24736d9cb5db88573662264ab6fce49c39977c1d792e564f32f1f7fe0923b44d.css" integrity="sha256-JHNtnLXbiFc2YiZKtvzknDmXfB15LlZPMvH3/gkjtE0=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://marcelarie.github.io/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://marcelarie.github.io/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://marcelarie.github.io/favicon-32x32.png">
@@ -24,6 +24,34 @@
         #theme-toggle,
         .top-link {
             display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
         }
 
     </style>
@@ -41,6 +69,10 @@
 <body class="list" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark');
     }
 
