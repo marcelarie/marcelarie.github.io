@@ -5,11 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>marcelarie</title>
-
-<meta name="description" content="">
+<title>Posts | marcelarie</title>
+<meta name="keywords" content="" />
+<meta name="description" content="Posts - marcelarie">
 <meta name="author" content="">
-<link rel="canonical" href="http://marcelarie.github.io/" />
+<link rel="canonical" href="http://marcelarie.github.io/posts/" />
 <link crossorigin="anonymous" href="/assets/css/stylesheet.min.5e2b4101351c21e906f398ae96901791830f58d430f96f2659dab7eaef7b3cb7.css" integrity="sha256-XitBATUcIekG85iulpAXkYMPWNQw&#43;W8mWdq36u97PLc=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://marcelarie.github.io/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://marcelarie.github.io/favicon-16x16.png">
@@ -19,7 +19,7 @@
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <meta name="generator" content="Hugo 0.88.1" />
-<link rel="alternate" type="application/rss+xml" href="http://marcelarie.github.io/index.xml">
+<link rel="alternate" type="application/rss+xml" href="http://marcelarie.github.io/posts/index.xml">
 <noscript>
     <style>
         #theme-toggle,
@@ -28,25 +28,27 @@
         }
 
     </style>
-</noscript><meta property="og:title" content="marcelarie" />
+</noscript><meta property="og:title" content="Posts" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="http://marcelarie.github.io/" />
+<meta property="og:url" content="http://marcelarie.github.io/posts/" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="marcelarie"/>
+<meta name="twitter:title" content="Posts"/>
 <meta name="twitter:description" content=""/>
+
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "marcelarie",
-  "url": "http://marcelarie.github.io/",
-  "description": "",
-  "thumbnailUrl": "http://marcelarie.github.io/favicon.ico",
-  "sameAs": [
-      
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://marcelarie.github.io/posts/"
+    }
   ]
 }
 </script>
@@ -92,18 +94,22 @@
     </nav>
 </header>
 <main class="main"> 
-<article class="first-entry home-info">
-    <header class="entry-header">
-        <h1>hi</h1>
-    </header>
-    <section class="entry-content">
-        <p>🐢</p>
-    </section>
-    <footer class="entry-footer">
-        <div class="social-icons">
-</div>
+<header class="page-header">
+  <h1>Posts</h1>
+</header>
 
-    </footer>
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Learn Async/Await in Rust creating a Web Crawler
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>What is async-await ? If you just started programming async-await may feel a strange concept. For now you write code in a file and it runs in order, that is it right? But the web doesn’t work like that, all the communication that we do today its asynchronous.
+So for example this will be synchronous code:
+fn synchronous_hello() { println!(&#34;hello!&#34;); } fn main() { let hello = synchronous_hello(); // &#34;hello!&#34; gets printed } use futures::executor::block_on; // we talk about this later :)  async fn asynchronous_hello() { println!...</p>
+  </section>
+  <footer class="entry-footer">September 29, 2021</footer>
+  <a class="entry-link" aria-label="post link to Learn Async/Await in Rust creating a Web Crawler" href="http://marcelarie.github.io/posts/my-first-post/"></a>
 </article>
     </main>
     

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Posts on marcelarie</title>
+    <link>http://marcelarie.github.io/posts/</link>
+    <description>Recent content in Posts on marcelarie</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 29 Sep 2021 19:18:38 +0200</lastBuildDate><atom:link href="http://marcelarie.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Learn Async/Await in Rust creating a Web Crawler</title>
+      <link>http://marcelarie.github.io/posts/my-first-post/</link>
+      <pubDate>Wed, 29 Sep 2021 19:18:38 +0200</pubDate>
+      
+      <guid>http://marcelarie.github.io/posts/my-first-post/</guid>
+      <description>What is async-await ? If you just started programming async-await may feel a strange concept. For now you write code in a file and it runs in order, that is it right? But the web doesn&amp;rsquo;t work like that, all the communication that we do today its asynchronous.
+So for example this will be synchronous code:
+fn synchronous_hello() { println!(&amp;#34;hello!&amp;#34;); } fn main() { let hello = synchronous_hello(); // &amp;#34;hello!&amp;#34; gets printed } use futures::executor::block_on; // we talk about this later :)  async fn asynchronous_hello() { println!</description>
+    </item>
+    
+  </channel>
+</rss>
