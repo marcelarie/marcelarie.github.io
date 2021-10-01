@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Learn Async/Await in Rust creating a Web Crawler | marcelarie</title>
+<title>My First Post | marcelarie</title>
 <meta name="keywords" content="" />
 <meta name="description" content="What is async-await ? If you just started programming async-await may feel a strange concept. For now you write code in a file and it runs in order, that is it right? But the web doesn&rsquo;t work like that, all the communication that we do today its asynchronous.
 So for example this will be synchronous code:
@@ -31,17 +31,17 @@ fn synchronous_hello() { println!(&#34;hello!&#34;); } fn main() { let hello = s
         }
 
     </style>
-</noscript><meta property="og:title" content="Learn Async/Await in Rust creating a Web Crawler" />
+</noscript><meta property="og:title" content="My First Post" />
 <meta property="og:description" content="What is async-await ? If you just started programming async-await may feel a strange concept. For now you write code in a file and it runs in order, that is it right? But the web doesn&rsquo;t work like that, all the communication that we do today its asynchronous.
 So for example this will be synchronous code:
 fn synchronous_hello() { println!(&#34;hello!&#34;); } fn main() { let hello = synchronous_hello(); // &#34;hello!&#34; gets printed } use futures::executor::block_on; // we talk about this later :)  async fn asynchronous_hello() { println!" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://marcelarie.github.io/posts/my-first-post/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-09-29T19:18:38&#43;02:00" />
-<meta property="article:modified_time" content="2021-09-29T19:18:38&#43;02:00" />
+<meta property="article:published_time" content="2021-10-01T22:57:26&#43;02:00" />
+<meta property="article:modified_time" content="2021-10-01T22:57:26&#43;02:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Learn Async/Await in Rust creating a Web Crawler"/>
+<meta name="twitter:title" content="My First Post"/>
 <meta name="twitter:description" content="What is async-await ? If you just started programming async-await may feel a strange concept. For now you write code in a file and it runs in order, that is it right? But the web doesn&rsquo;t work like that, all the communication that we do today its asynchronous.
 So for example this will be synchronous code:
 fn synchronous_hello() { println!(&#34;hello!&#34;); } fn main() { let hello = synchronous_hello(); // &#34;hello!&#34; gets printed } use futures::executor::block_on; // we talk about this later :)  async fn asynchronous_hello() { println!"/>
@@ -61,7 +61,7 @@ fn synchronous_hello() { println!(&#34;hello!&#34;); } fn main() { let hello = s
     {
       "@type": "ListItem",
       "position":  2 ,
-      "name": "Learn Async/Await in Rust creating a Web Crawler",
+      "name": "My First Post",
       "item": "http://marcelarie.github.io/posts/my-first-post/"
     }
   ]
@@ -71,8 +71,8 @@ fn synchronous_hello() { println!(&#34;hello!&#34;); } fn main() { let hello = s
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Learn Async/Await in Rust creating a Web Crawler",
-  "name": "Learn Async\/Await in Rust creating a Web Crawler",
+  "headline": "My First Post",
+  "name": "My First Post",
   "description": "What is async-await ? If you just started programming async-await may feel a strange concept. For now you write code in a file and it runs in order, that is it right? But the web doesn\u0026rsquo;t work like that, all the communication that we do today its asynchronous.\nSo for example this will be synchronous code:\nfn synchronous_hello() { println!(\u0026#34;hello!\u0026#34;); } fn main() { let hello = synchronous_hello(); // \u0026#34;hello!\u0026#34; gets printed } use futures::executor::block_on; // we talk about this later :)  async fn asynchronous_hello() { println!",
   "keywords": [
     
@@ -80,8 +80,8 @@ fn synchronous_hello() { println!(&#34;hello!&#34;); } fn main() { let hello = s
   "articleBody": "What is async-await ? If you just started programming async-await may feel a strange concept. For now you write code in a file and it runs in order, that is it right? But the web doesn’t work like that, all the communication that we do today its asynchronous.\nSo for example this will be synchronous code:\nfn synchronous_hello() { println!(\"hello!\"); } fn main() { let hello = synchronous_hello(); // \"hello!\" gets printed } use futures::executor::block_on; // we talk about this later :)  async fn asynchronous_hello() { println!(\"hello!\"); } fn main() { let hello_for_later = asynchronous_hello(); // Nothing gets printed  // ... ton of more code that can be run here  block_on(hello_for_later); // \"hello!\" gets printed } So with that you are set for the rest of the post, async-await makes it easy to write asynchronous code. Rust it’s not a mature language so for some time didn’t have the async-await syntax.\nBut now we got it, and we gonna learn together, myself included, how it works!\nWhat I need to make my rust code asynchronous ? To create asynchronous functions you just need to add the async keyword before the function.\nasync fn return_ten() - u64 { 10 } To run that code you will need an executor or the await keyword. For that we will use the futures library. That comes with multiple abstractions to work with async-await. Here you have an example of both methods:\n[dependencies] futures = \"0.3\" use futures::executor::block_on; async fn return_ten() - u64 { 10 } async fn await_for_ten_or_return_zero() - u64 { if return_ten().await == 10 { 10 } else { 0 //  } } fn main() { let ten = block_on(await_for_ten()); println!(\"Finally {} !\", ten) // \"Finally 10 !\" is printed } We are using the block_on executor on the main function because the await keyword can only be used inside async functions. await_for_ten_or_return_zero needs, like the name says, to execute return_ten first to compare it. So we use await to get the result from the asynchronous call. We can use the block_on executor wherever we want.\nThere are other executors that let us do more stuff than blocking the current thread until the futures completes. For example futures::join will get multiple futures, run them concurrently and return a tuple with the results in order:\nuse futures::join; async fn a_and_b() { // join! just works inside async functions  let a = async { 'a' }; let b = async { 'b' }; join!(a, b); // ('a', 'b')  } One thing to mentoin is that in Rust the async-await implementation it’s lazy, that means that the code will not run on the background and wait for the await, but rather run at the moment the await call asks for it. This design follows the Rust philoshopy having a better performance and error handeling.\nSo that’s it ? Well, that can be it with the basics but you have a lot more options to work asynchronously in Rust. You have multiple frameworks/runtimes, none of them are standard:\n Tokio : A popular async ecosystem with HTTP, gRPC, and tracing frameworks. async-std : A crate that provides asynchronous counterparts to standard library components. smol : A small, simplified async runtime. Provides the Async trait that can be used to wrap structs like UnixStream or TcpListener.  Each one of them have different approaches, I will choose tokio because it’s the more one that looks more popular and standard.\nCrawler boilerplatte To create a basic crawler we need the following:\n Make HTTP calls Parse HTML code Async calls system  We will be using reqwest  for the HTTP calls, html5ever  for the parsing and tokio  for the async calls.\n[dependencies] reqwest = { version = \"0.11\" } html5ever = \"*\" tokio = { version = \"1\", features = [\"full\"] } ",
   "wordCount" : "629",
   "inLanguage": "en",
-  "datePublished": "2021-09-29T19:18:38+02:00",
-  "dateModified": "2021-09-29T19:18:38+02:00",
+  "datePublished": "2021-10-01T22:57:26+02:00",
+  "dateModified": "2021-10-01T22:57:26+02:00",
   "mainEntityOfPage": {
     "@type": "WebPage",
     "@id": "http://marcelarie.github.io/posts/my-first-post/"
@@ -143,9 +143,9 @@ fn synchronous_hello() { println!(&#34;hello!&#34;); } fn main() { let hello = s
   <header class="post-header">
     
     <h1 class="post-title">
-      Learn Async/Await in Rust creating a Web Crawler
+      My First Post
     </h1>
-    <div class="post-meta">September 29, 2021
+    <div class="post-meta">October 1, 2021
 </div>
   </header> 
   <div class="post-content"><h3 id="what-is-async-await-">What is async-await ?<a hidden class="anchor" aria-hidden="true" href="#what-is-async-await-">#</a></h3>
