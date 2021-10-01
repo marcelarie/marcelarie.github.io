@@ -18,5 +18,7 @@ So for example this will be synchronous code:
 fn synchronous_hello() { println!(&amp;#34;hello!&amp;#34;); } fn main() { let hello = synchronous_hello(); // &amp;#34;hello!&amp;#34; gets printed } use futures::executor::block_on; // we talk about this later :)  async fn asynchronous_hello() { println!</description>
     </item>
     
+    
+    
   </channel>
 </rss>
