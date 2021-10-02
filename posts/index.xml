@@ -8,12 +8,13 @@
     <language>en-us</language>
     <lastBuildDate>Fri, 01 Oct 2021 22:57:26 +0200</lastBuildDate><atom:link href="http://marcelarie.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>My First Post</title>
+      <title>Learn Async/Await in Rust creating a Web Crawler</title>
       <link>http://marcelarie.github.io/posts/my-first-post/</link>
       <pubDate>Fri, 01 Oct 2021 22:57:26 +0200</pubDate>
       
       <guid>http://marcelarie.github.io/posts/my-first-post/</guid>
-      <description>What is async-await ? If you just started programming async-await may feel a strange concept. For now you write code in a file and it runs in order, that is it right? But the web doesn&amp;rsquo;t work like that, all the communication that we do today its asynchronous.
+      <description>What is async-await ? If you just started programming async-await may feel a strange concept.
+For now you write code in a file and it runs in order, that is it right? But the web doesn&amp;rsquo;t work like that, all the communication that we do today its asynchronous.
 So for example this will be synchronous code:
 1 2 3 4 5 6 7  fn synchronous_hello(){println!(&amp;#34;hello!&amp;#34;);}fn main(){lethello=synchronous_hello();// &amp;#34;hello!&amp;#34; gets printed }  1 2 3 4 5 6 7 8 9 10 11 12  usefutures::executor::block_on;// we talk about this later :) asyncfn asynchronous_hello(){println!</description>
     </item>
