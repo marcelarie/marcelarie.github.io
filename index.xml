@@ -15,7 +15,7 @@
       <guid>http://marcelarie.github.io/posts/my-first-post/</guid>
       <description>What is async-await ? If you just started programming async-await may feel a strange concept. For now you write code in a file and it runs in order, that is it right? But the web doesn&amp;rsquo;t work like that, all the communication that we do today its asynchronous.
 So for example this will be synchronous code:
-fn synchronous_hello() { println!(&amp;#34;hello!&amp;#34;); } fn main() { let hello = synchronous_hello(); // &amp;#34;hello!&amp;#34; gets printed } use futures::executor::block_on; // we talk about this later :)  async fn asynchronous_hello() { println!</description>
+1 2 3 4 5 6 7  fn synchronous_hello(){println!(&amp;#34;hello!&amp;#34;);}fn main(){lethello=synchronous_hello();// &amp;#34;hello!&amp;#34; gets printed }  1 2 3 4 5 6 7 8 9 10 11 12  usefutures::executor::block_on;// we talk about this later :) asyncfn asynchronous_hello(){println!</description>
     </item>
     
     
