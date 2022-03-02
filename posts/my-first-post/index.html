@@ -9,7 +9,7 @@
 />
 <meta name="robots" content="index, follow" />
 <title>
-    Learn Async/Await in Rust creating a Web Crawler | marcelarie
+    Learn Async/Await in Rust creating a Web Crawler | my blog
 </title>
 <meta
     name="keywords"
@@ -20,8 +20,8 @@ So for example this will be synchronous code:
 1 2 3 4 5 6 7  fn synchronous_hello(){println!(&#34;hello!&#34;);}fn main(){lethello=synchronous_hello();// &#34;hello!&#34; gets printed }  1 2 3 4 5 6 7 8 9 10 11 12  usefutures::executor::block_on;// we talk about this later :) asyncfn asynchronous_hello(){println!"> <meta name="author" content=""> <link rel="canonical" href="http://marcelarie.github.io/posts/my-first-post/" />
 <link
     crossorigin="anonymous"
-    href="/assets/css/stylesheet.min.ffcfb76e1a27024b4590b0f1c7c08c343ec56b7d6f9d9357185e03cda7daec54.css"
-    integrity="sha256-/8&#43;3bhonAktFkLDxx8CMND7Fa31vnZNXGF4Dzafa7FQ="
+    href="/assets/css/stylesheet.min.bdc38115ea5f9c8e001f0f95b53dd436370df8ec818d7d85d6192af26c67359c.css"
+    integrity="sha256-vcOBFepfnI4AHw&#43;VtT3UNjcN&#43;OyBjX2F1hkq8mxnNZw="
     rel="preload stylesheet"
     as="style"
 /> <link rel="icon" href="http://marcelarie.github.io/favicon.ico"> <link
@@ -29,7 +29,7 @@ rel="icon" type="image/png" sizes="16x16" href="http://marcelarie.github.io/favi
 <link rel="icon" type="image/png" sizes="32x32" href="http://marcelarie.github.io/favicon-32x32.png">
 <link rel="apple-touch-icon" href="http://marcelarie.github.io/apple-touch-icon.png"> <link rel="mask-icon" href="http://marcelarie.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33" />
-<meta name="msapplication-TileColor" content="#2e2e33" /> <meta name="generator" content="Hugo 0.88.1" /> <noscript>
+<meta name="msapplication-TileColor" content="#2e2e33" /> <meta name="generator" content="Hugo 0.92.2" /> <noscript>
     <style>
         #theme-toggle,
         .top-link {
@@ -122,7 +122,7 @@ So for example this will be synchronous code:
   },
   "publisher": {
     "@type": "Organization",
-    "name": "marcelarie",
+    "name": "my blog",
     "logo": {
       "@type": "ImageObject",
       "url": "http://marcelarie.github.io/favicon.ico"
@@ -147,7 +147,7 @@ So for example this will be synchronous code:
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://marcelarie.github.io/" accesskey="h" title="marcelarie (Alt + H)">marcelarie</a>
+            <a href="http://marcelarie.github.io/" accesskey="h" title="my blog (Alt + H)">my blog</a>
             <span class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -219,7 +219,7 @@ asynchronous.</p>
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">fn</span> <span class="nf">synchronous_hello</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;hello!&#34;</span><span class="p">);</span><span class="w">
+</span><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;hello!&#34;</span><span class="p">);</span><span class="w">
 </span><span class="w"></span><span class="p">}</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -246,7 +246,7 @@ asynchronous.</p>
 <pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">futures</span>::<span class="n">executor</span>::<span class="n">block_on</span><span class="p">;</span><span class="w"> </span><span class="c1">// we talk about this later :)
 </span><span class="c1"></span><span class="w">
 </span><span class="w"></span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">asynchronous_hello</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;hello!&#34;</span><span class="p">);</span><span class="w">
+</span><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;hello!&#34;</span><span class="p">);</span><span class="w">
 </span><span class="w"></span><span class="p">}</span><span class="w">
 </span><span class="w">
 </span><span class="w">
@@ -319,7 +319,7 @@ async-await. Here you have an example of both methods:</p>
 </span><span class="w">
 </span><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span><span class="w">   </span><span class="kd">let</span><span class="w"> </span><span class="n">ten</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">block_on</span><span class="p">(</span><span class="n">await_for_ten</span><span class="p">());</span><span class="w">
-</span><span class="w">   </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&#34;Finally {} !&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ten</span><span class="p">)</span><span class="w"> </span><span class="c1">// &#34;Finally 10 !&#34; is printed
+</span><span class="w">   </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;Finally {} !&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ten</span><span class="p">)</span><span class="w"> </span><span class="c1">// &#34;Finally 10 !&#34; is printed
 </span><span class="c1"></span><span class="p">}</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
@@ -413,7 +413,7 @@ and <a href="https://github.com/tokio-rs/tokio"><code>tokio</code></a> for the a
     </main>
     
 <footer class="footer">
-    <span>&copy; 2021 <a href="http://marcelarie.github.io/">marcelarie</a></span>
+    <span>&copy; 2022 <a href="http://marcelarie.github.io/">my blog</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
