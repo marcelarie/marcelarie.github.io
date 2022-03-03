@@ -20,8 +20,8 @@ So for example this will be synchronous code:
 1 2 3 4 5 6 7  fn synchronous_hello(){println!(&#34;hello!&#34;);}fn main(){lethello=synchronous_hello();// &#34;hello!&#34; gets printed }  1 2 3 4 5 6 7 8 9 10 11 12  usefutures::executor::block_on;// we talk about this later :) asyncfn asynchronous_hello(){println!"> <meta name="author" content=""> <link rel="canonical" href="http://marcelarie.github.io/posts/my-first-post/" />
 <link
     crossorigin="anonymous"
-    href="/assets/css/stylesheet.min.bdc38115ea5f9c8e001f0f95b53dd436370df8ec818d7d85d6192af26c67359c.css"
-    integrity="sha256-vcOBFepfnI4AHw&#43;VtT3UNjcN&#43;OyBjX2F1hkq8mxnNZw="
+    href="/assets/css/stylesheet.min.45b96a3a2bbd41fdb1e2930a365d033ebd8668e793c59dafeddff716dd6a4811.css"
+    integrity="sha256-RblqOiu9Qf2x4pMKNl0DPr2GaOeTxZ2v7d/3Ft1qSBE="
     rel="preload stylesheet"
     as="style"
 /> <link rel="icon" href="http://marcelarie.github.io/favicon.ico"> <link
@@ -178,7 +178,7 @@ So for example this will be synchronous code:
                 </a>
             </li>
             <li>
-                <a href="http://marcelarie.github.io/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="http://marcelarie.github.io/search/" title="Search">
                     <span>Search</span>
                 </a>
             </li>
@@ -198,7 +198,8 @@ So for example this will be synchronous code:
     <h1 class="post-title">
       Learn Async/Await in Rust creating a Web Crawler
     </h1>
-    <div class="post-meta">October 1, 2021&nbsp;·&nbsp;3 min&nbsp;|&nbsp;<a href="https://github.com/marcelarie/blog/tree/main/content/posts/my-first-post.md" rel="noopener noreferrer" target="_blank">fix typo</a>
+    <div class="post-meta"><span title='2021-10-01 22:57:26 +0200 CEST'>October 1, 2021</span>&nbsp;·&nbsp;3 min&nbsp;|&nbsp;<a href="https://github.com/marcelarie/blog/tree/main/content/posts/my-first-post.md" rel="noopener noreferrer" target="_blank">fix typo</a>
+
 </div>
   </header> 
   <div class="post-content"><h3 id="what-is-async-await-">What is async-await ?<a hidden class="anchor" aria-hidden="true" href="#what-is-async-await-">#</a></h3>
@@ -400,14 +401,15 @@ and <a href="https://github.com/tokio-rs/tokio"><code>tokio</code></a> for the a
 
   <footer class="post-footer">
 
-  </footer><script src="https://utteranc.es/client.js"
-        repo="marcelarie/blog"
-        issue-term="pathname"
-        label="_utterances"
-        theme="preferred-color-scheme"
-        crossorigin="anonymous"
-        async>
-</script>
+  </footer><script
+    src="https://utteranc.es/client.js"
+    repo="marcelarie/blog"
+    issue-term="pathname"
+    label="_utterances"
+    theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+></script>
 
 </article>
     </main>
@@ -428,9 +430,11 @@ and <a href="https://github.com/tokio-rs/tokio"><code>tokio</code></a> for the a
 
 <script>
     let menu = document.getElementById('menu')
-    menu.scrollLeft = localStorage.getItem("menu-scroll-position");
-    menu.onscroll = function () {
-        localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
     }
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

@@ -17,8 +17,8 @@
 /> <meta name="description" content="archives"> <meta name="author" content=""> <link rel="canonical" href="http://marcelarie.github.io/archives/" />
 <link
     crossorigin="anonymous"
-    href="/assets/css/stylesheet.min.bdc38115ea5f9c8e001f0f95b53dd436370df8ec818d7d85d6192af26c67359c.css"
-    integrity="sha256-vcOBFepfnI4AHw&#43;VtT3UNjcN&#43;OyBjX2F1hkq8mxnNZw="
+    href="/assets/css/stylesheet.min.45b96a3a2bbd41fdb1e2930a365d033ebd8668e793c59dafeddff716dd6a4811.css"
+    integrity="sha256-RblqOiu9Qf2x4pMKNl0DPr2GaOeTxZ2v7d/3Ft1qSBE="
     rel="preload stylesheet"
     as="style"
 /> <link rel="icon" href="http://marcelarie.github.io/favicon.ico"> <link
@@ -163,7 +163,7 @@ rel="icon" type="image/png" sizes="16x16" href="http://marcelarie.github.io/favi
                 </a>
             </li>
             <li>
-                <a href="http://marcelarie.github.io/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="http://marcelarie.github.io/search/" title="Search">
                     <span>Search</span>
                 </a>
             </li>
@@ -189,7 +189,7 @@ rel="icon" type="image/png" sizes="16x16" href="http://marcelarie.github.io/favi
       <div class="archive-entry">
         <h3 class="archive-entry-title">Learn Async/Await in Rust creating a Web Crawler
         </h3>
-        <div class="archive-meta">October 1, 2021&nbsp;·&nbsp;3 min</div>
+        <div class="archive-meta"><span title='2021-10-01 22:57:26 +0200 CEST'>October 1, 2021</span>&nbsp;·&nbsp;3 min</div>
         <a class="entry-link" aria-label="post link to Learn Async/Await in Rust creating a Web Crawler" href="http://marcelarie.github.io/posts/my-first-post/"></a>
       </div>
     </div>
@@ -213,9 +213,11 @@ rel="icon" type="image/png" sizes="16x16" href="http://marcelarie.github.io/favi
 
 <script>
     let menu = document.getElementById('menu')
-    menu.scrollLeft = localStorage.getItem("menu-scroll-position");
-    menu.onscroll = function () {
-        localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
     }
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

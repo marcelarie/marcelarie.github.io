@@ -17,8 +17,8 @@
 /> <meta name="description" content="Posts - marcelarie"> <meta name="author" content=""> <link rel="canonical" href="http://marcelarie.github.io/posts/" />
 <link
     crossorigin="anonymous"
-    href="/assets/css/stylesheet.min.bdc38115ea5f9c8e001f0f95b53dd436370df8ec818d7d85d6192af26c67359c.css"
-    integrity="sha256-vcOBFepfnI4AHw&#43;VtT3UNjcN&#43;OyBjX2F1hkq8mxnNZw="
+    href="/assets/css/stylesheet.min.45b96a3a2bbd41fdb1e2930a365d033ebd8668e793c59dafeddff716dd6a4811.css"
+    integrity="sha256-RblqOiu9Qf2x4pMKNl0DPr2GaOeTxZ2v7d/3Ft1qSBE="
     rel="preload stylesheet"
     as="style"
 /> <link rel="icon" href="http://marcelarie.github.io/favicon.ico"> <link
@@ -137,7 +137,7 @@ rel="icon" type="image/png" sizes="16x16" href="http://marcelarie.github.io/favi
                 </a>
             </li>
             <li>
-                <a href="http://marcelarie.github.io/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="http://marcelarie.github.io/search/" title="Search">
                     <span>Search</span>
                 </a>
             </li>
@@ -165,7 +165,7 @@ For now you write code in a file and it runs in order, that is it right? But the
 So for example this will be synchronous code:
 1 2 3 4 5 6 7  fn synchronous_hello(){println!(&#34;hello!&#34;);}fn main(){lethello=synchronous_hello();// &#34;hello!&#34; gets printed }  1 2 3 4 5 6 7 8 9 10 11 12  usefutures::executor::block_on;// we talk about this later :) asyncfn asynchronous_hello(){println!...</p>
   </section>
-  <footer class="entry-footer">October 1, 2021&nbsp;·&nbsp;3 min</footer>
+  <footer class="entry-footer"><span title='2021-10-01 22:57:26 +0200 CEST'>October 1, 2021</span>&nbsp;·&nbsp;3 min</footer>
   <a class="entry-link" aria-label="post link to Learn Async/Await in Rust creating a Web Crawler" href="http://marcelarie.github.io/posts/my-first-post/"></a>
 </article>
     </main>
@@ -186,9 +186,11 @@ So for example this will be synchronous code:
 
 <script>
     let menu = document.getElementById('menu')
-    menu.scrollLeft = localStorage.getItem("menu-scroll-position");
-    menu.onscroll = function () {
-        localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
     }
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
