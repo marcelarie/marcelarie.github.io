@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+/>
+<meta name="robots" content="index, follow" />
+<title>
+    Introduction to Nix I | marcelarie
+</title>
+<meta
+    name="keywords"
+    content=""
+/> <meta name="description" content="Why Nix? This is the first article of the Nix series. I will explain my personal point of view on why I use Nix and why it makes sense to use it instead of other tools. If you prefer to jump directly into the technical concepts I recommend to start on part II, where I will create a custom and system agnostic Nix configuration.
+I have been a Linux head from some time, and as much as I love Linux, dot file management can be a Pain In The Ass."> <meta name="author" content=""> <link rel="canonical" href="http://marcelarie.github.io/posts/introduction-to-nix-i/" />
+<link
+    crossorigin="anonymous"
+    href="/assets/css/stylesheet.min.c2651d0717c6b47444ce765101fae20a7c227bc10d3de77a8f6b997358ae73ec.css"
+    integrity="sha256-wmUdBxfGtHREznZRAfriCnwie8ENPed6j2uZc1iuc&#43;w="
+    rel="preload stylesheet"
+    as="style"
+/> <link rel="icon" href="http://marcelarie.github.io/favicon.ico"> <link
+rel="icon" type="image/png" sizes="16x16" href="http://marcelarie.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://marcelarie.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://marcelarie.github.io/apple-touch-icon.png"> <link rel="mask-icon" href="http://marcelarie.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33" />
+<meta name="msapplication-TileColor" content="#2e2e33" /> <meta name="generator" content="Hugo 0.96.0" /> <noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+    </style>
+</noscript><meta property="og:title" content="Introduction to Nix I" />
+<meta property="og:description" content="Why Nix? This is the first article of the Nix series. I will explain my personal point of view on why I use Nix and why it makes sense to use it instead of other tools. If you prefer to jump directly into the technical concepts I recommend to start on part II, where I will create a custom and system agnostic Nix configuration.
+I have been a Linux head from some time, and as much as I love Linux, dot file management can be a Pain In The Ass." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://marcelarie.github.io/posts/introduction-to-nix-i/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-17T20:57:47&#43;02:00" />
+<meta property="article:modified_time" content="2022-04-17T20:57:47&#43;02:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Introduction to Nix I"/>
+<meta name="twitter:description" content="Why Nix? This is the first article of the Nix series. I will explain my personal point of view on why I use Nix and why it makes sense to use it instead of other tools. If you prefer to jump directly into the technical concepts I recommend to start on part II, where I will create a custom and system agnostic Nix configuration.
+I have been a Linux head from some time, and as much as I love Linux, dot file management can be a Pain In The Ass."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://marcelarie.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Introduction to Nix I",
+      "item": "http://marcelarie.github.io/posts/introduction-to-nix-i/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Introduction to Nix I",
+  "name": "Introduction to Nix I",
+  "description": "Why Nix? This is the first article of the Nix series. I will explain my personal point of view on why I use Nix and why it makes sense to use it instead of other tools. If you prefer to jump directly into the technical concepts I recommend to start on part II, where I will create a custom and system agnostic Nix configuration.\nI have been a Linux head from some time, and as much as I love Linux, dot file management can be a Pain In The Ass.",
+  "keywords": [
+    
+  ],
+  "articleBody": "Why Nix? This is the first article of the Nix series. I will explain my personal point of view on why I use Nix and why it makes sense to use it instead of other tools. If you prefer to jump directly into the technical concepts I recommend to start on part II, where I will create a custom and system agnostic Nix configuration.\nI have been a Linux head from some time, and as much as I love Linux, dot file management can be a Pain In The Ass. Almost as a part-time job, if done wrong.\nAt the beginning of my Linux journey dot files where something I had to fight with. Just a strange place full of nonsense where I pasted stuff from the internet. Then with experience I got cocky and changed too much stuff, breaking the system multiple times.\n1. Learning the bad way When that happen I needed to reinstall the system, because I did not know how to restore it any other way, and reconfigure EVERYTHING from scratch. Yes, multiple times. It will be the equivalent to finish a whole project without doing a commit once.\nAfter countless trips over the same stone and some acquired knowledge I started to organize those valuable dotfiles.\n  The Linux file system hierarchy   Having a git repository with all my configurations was the real game changer, finally I can break my system without any remorse. Just to clarify, before having those files on “the cloud”, the process of restoring the computer looked like this:\n 1. Break the system late at night before an important next day at work\n2. Search for 3 hours a way to fix it without reinstalling the whole sys\n3. Use another computer to create a bootable USB with the Linux distro\n4. Install from bootable\n5. Install and configure kde, i3 or whatever I was using at the moment\n6. Configure SSH keys\n7. Install and configure nvim\n8. Install and configure X\n9. Install and configure Y\n I think you get it right?\nIt was madness. And you would say, well Marcel, maybe if you used a MacOS or a Windows that will not happen. And you are correct, my life would be simpler. But I am really happy that I didn’t do that, because I learned a ton of stuff in the process. That and FOSS software it’s a lot cooler.\nAfter using the plain git repo, timeshift and stow appeared in my life. Timeshift was really useful in multiple situations, Stow seems and amazing tool but, I have never seen the real gain comparing it to a git bare repo.\nBut well, let’s get to the main topic, Nix. I found nix, being more specific NixOS, two years ago, and I have been using it as my main distro for almost one. Nix is not a dotfile management tool, but it fixes a lot of issues that those tools have. That’s why I started to use it. My plan it’s to make a Nix series and explain in more detail what it is, and create a simple system agnostic configuration during that process.\n",
+  "wordCount" : "524",
+  "inLanguage": "en",
+  "datePublished": "2022-04-17T20:57:47+02:00",
+  "dateModified": "2022-04-17T20:57:47+02:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://marcelarie.github.io/posts/introduction-to-nix-i/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "marcelarie",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://marcelarie.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+        message.theme = 'github-dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+        message.theme = 'github-light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+        message.theme = 'github-dark';
+    }
+    iframe.contentWindow.postMessage(
+        message,
+        'https://utteranc.es'
+    );
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://marcelarie.github.io/" accesskey="h" title="marcelarie (Alt + H)">marcelarie</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://marcelarie.github.io/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://marcelarie.github.io/search/" title="Search">
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://marcelarie.github.io/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://marcelarie.github.io/">Home</a>&nbsp;»&nbsp;<a href="http://marcelarie.github.io/posts/">Posts</a></div>
+    <h1 class="post-title">
+      Introduction to Nix I
+    </h1>
+    <div class="post-meta"><span title='2022-04-17 20:57:47 +0200 CEST'>April 17, 2022</span>&nbsp;·&nbsp;3 min&nbsp;|&nbsp;<a href="https://github.com/marcelarie/blog/tree/main/content/posts/introduction-to-nix-i.md" rel="noopener noreferrer" target="_blank">fix typo</a>
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="why-nix">Why Nix?<a hidden class="anchor" aria-hidden="true" href="#why-nix">#</a></h1>
+<p>This is the first article of the Nix series. I will explain my personal point of
+view on why I use Nix and why it makes sense to use it instead of other tools.
+If you prefer to jump directly into the technical concepts I recommend to start
+on part <a href="https://marcelarie.com/archives/"><code>II</code></a>, where I will create a custom
+and system agnostic Nix configuration.</p>
+<p>I have been a Linux head from some time, and as much as I love Linux, dot file
+management can be a <em>Pain In The Ass</em>. Almost as a part-time job, if done wrong.</p>
+<p>At the beginning of my Linux journey dot files where something I had to fight with.
+Just a strange place full of nonsense where I pasted stuff from the internet. Then with
+experience I got cocky and changed too much stuff, breaking the system multiple times.</p>
+<h3 id="1-learning-the-bad-way">1. Learning the bad way<a hidden class="anchor" aria-hidden="true" href="#1-learning-the-bad-way">#</a></h3>
+<p>When that happen I needed to reinstall the system, because I did not know how to
+restore it any other way, and reconfigure <em>EVERYTHING</em> from scratch. Yes, multiple times.
+It will be the equivalent to finish a whole project without doing a commit once.</p>
+<p>After countless <a href="https://www.youtube.com/watch?v=M6fLb-qfajc">trips over the same stone</a>
+and some acquired knowledge I started to organize those valuable dotfiles.</p>
+<center>
+<figure>
+<img src="https://user-images.githubusercontent.com/62728887/163723447-80a38bb0-13c3-49ad-b02c-8b7915f72494.jpg" alt="zettelkasten" width="400"/>
+  <figcaption><sub>The Linux file system hierarchy</sub></figcaption>
+</figure>
+</center>
+<p>Having a git repository with all my configurations was the real game changer,
+finally I can break my system without any remorse. Just to clarify, before having
+those files on &ldquo;the cloud&rdquo;, the process of restoring the computer looked like this:</p>
+<sub>
+1. Break the system late at night before an important next day at work<br>
+2. Search for 3 hours a way to fix it without reinstalling the whole sys<br>
+3. Use another computer to create a bootable USB with the Linux distro<br>
+4. Install from bootable<br>
+5. Install and configure kde, i3 or whatever I was using at the moment<br>
+6. Configure SSH keys<br>
+7. Install and configure nvim<br>
+8. Install and configure X<br>
+9. Install and configure Y<br>
+<br>
+</sub>
+<p>I think you get it right?</p>
+<p>It was madness. And you would say, well Marcel, maybe if you used a MacOS or a
+Windows that will not happen. And you are correct, my life would be simpler.
+But I am really happy that I didn&rsquo;t do that, because I learned a ton of stuff
+in the process. That and FOSS software it&rsquo;s a lot cooler.</p>
+<p>After using the plain git repo, <a href="https://github.com/teejee2008/timeshift"><code>timeshift</code></a>
+and <a href="https://www.gnu.org/software/stow/"><code>stow</code></a> appeared in my life. Timeshift was really useful in multiple situations, Stow seems and amazing tool
+but, I have never seen the real gain comparing it to <a href="https://github.com/marcelarie/dots">a git bare repo</a>.</p>
+<p>But well, let&rsquo;s get to the main topic, Nix. I found <code>nix</code>, being more specific <code>NixOS</code>,
+two years ago, and I have been using it as my main distro for almost one. Nix is not
+a dotfile management tool, but it fixes a lot of issues that those tools have. That&rsquo;s why I
+started to use it. My plan it&rsquo;s to make a Nix series and explain in more detail what it is,
+and create a simple system agnostic configuration during that process.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+<nav class="paginav">
+  <a class="next" href="http://marcelarie.github.io/posts/my-first-post/">
+    <span class="title">Next Page »</span>
+    <br>
+    <span>Learn Async/Await in Rust creating a Web Crawler</span>
+  </a>
+</nav>
+
+  </footer><script
+    src="https://utteranc.es/client.js"
+    repo="marcelarie/blog"
+    issue-term="pathname"
+    label="_utterances"
+    theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+></script>
+
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="http://marcelarie.github.io/">marcelarie</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const message = { type: 'set-theme', theme: "github-dark" };
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            message.theme = 'github-light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+        const iframe = document.querySelector('.utterances-frame');
+        iframe.contentWindow.postMessage(message, 'https://utteranc.es');
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = 'copy';
+
+        function copyingDone() {
+            copybutton.innerText = 'copied!';
+            setTimeout(() => {
+                copybutton.innerText = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

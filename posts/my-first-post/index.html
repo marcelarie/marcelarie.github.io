@@ -20,8 +20,8 @@ So for example this will be synchronous code:
 1 2 3 4 5 6 7  fn synchronous_hello(){println!(&#34;hello!&#34;);}fn main(){lethello=synchronous_hello();// &#34;hello!&#34; gets printed }  1 2 3 4 5 6 7 8 9 10 11 12  usefutures::executor::block_on;// we talk about this later :) asyncfn asynchronous_hello(){println!"> <meta name="author" content=""> <link rel="canonical" href="http://marcelarie.github.io/posts/my-first-post/" />
 <link
     crossorigin="anonymous"
-    href="/assets/css/stylesheet.min.84868ec0a340021dce54651037fd6fae01abfffa24490d3344c94b18c28b23b3.css"
-    integrity="sha256-hIaOwKNAAh3OVGUQN/1vrgGr//okSQ0zRMlLGMKLI7M="
+    href="/assets/css/stylesheet.min.c2651d0717c6b47444ce765101fae20a7c227bc10d3de77a8f6b997358ae73ec.css"
+    integrity="sha256-wmUdBxfGtHREznZRAfriCnwie8ENPed6j2uZc1iuc&#43;w="
     rel="preload stylesheet"
     as="style"
 /> <link rel="icon" href="http://marcelarie.github.io/favicon.ico"> <link
@@ -29,7 +29,7 @@ rel="icon" type="image/png" sizes="16x16" href="http://marcelarie.github.io/favi
 <link rel="icon" type="image/png" sizes="32x32" href="http://marcelarie.github.io/favicon-32x32.png">
 <link rel="apple-touch-icon" href="http://marcelarie.github.io/apple-touch-icon.png"> <link rel="mask-icon" href="http://marcelarie.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33" />
-<meta name="msapplication-TileColor" content="#2e2e33" /> <meta name="generator" content="Hugo 0.92.2" /> <noscript>
+<meta name="msapplication-TileColor" content="#2e2e33" /> <meta name="generator" content="Hugo 0.96.0" /> <noscript>
     <style>
         #theme-toggle,
         .top-link {
@@ -134,13 +134,30 @@ So for example this will be synchronous code:
 
 <body class="" id="top">
 <script>
+function waitForElm(selector) {
+    return new Promise(resolve => {
+        if (document.querySelector(selector)) { return resolve(document.querySelector(selector)); }
+        const observer = new MutationObserver(mutations => { if (document.querySelector(selector)) { resolve(document.querySelector(selector)); observer.disconnect(); } });
+        observer.observe(document.body, { childList: true, subtree: true });
+    });
+}
+waitForElm('.utterances-frame').then((frame) => {
+    const iframe = document.querySelector('.utterances-frame');
+    const message = { type: 'set-theme', theme: "github-dark" };
     if (localStorage.getItem("pref-theme") === "dark") {
         document.body.classList.add('dark');
     } else if (localStorage.getItem("pref-theme") === "light") {
         document.body.classList.remove('dark')
+        message.theme = 'github-light';
     } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark');
+        message.theme = 'github-dark';
     }
+    iframe.contentWindow.postMessage(
+        message,
+        'https://utteranc.es'
+    );
+});
 
 </script>
 
@@ -219,14 +236,14 @@ asynchronous.</p>
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">fn</span> <span class="nf">synchronous_hello</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;hello!&#34;</span><span class="p">);</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">hello</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">synchronous_hello</span><span class="p">();</span><span class="w"> </span><span class="c1">// &#34;hello!&#34; gets printed
-</span><span class="c1"></span><span class="p">}</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">synchronous_hello</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;hello!&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">hello</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">synchronous_hello</span><span class="p">();</span><span class="w"> </span><span class="c1">// &#34;hello!&#34; gets printed
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -244,19 +261,19 @@ asynchronous.</p>
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">futures</span>::<span class="n">executor</span>::<span class="n">block_on</span><span class="p">;</span><span class="w"> </span><span class="c1">// we talk about this later :)
-</span><span class="c1"></span><span class="w">
-</span><span class="w"></span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">asynchronous_hello</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;hello!&#34;</span><span class="p">);</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w">
-</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">hello_for_later</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">asynchronous_hello</span><span class="p">();</span><span class="w"> </span><span class="c1">// Nothing gets printed
-</span><span class="c1"></span><span class="w">        </span><span class="c1">// ... ton of more code that can be run here
-</span><span class="c1"></span><span class="w">    </span><span class="n">block_on</span><span class="p">(</span><span class="n">hello_for_later</span><span class="p">);</span><span class="w"> </span><span class="c1">// &#34;hello!&#34; gets printed
-</span><span class="c1"></span><span class="p">}</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">futures</span>::<span class="n">executor</span>::<span class="n">block_on</span><span class="p">;</span><span class="w"> </span><span class="c1">// we talk about this later :)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">asynchronous_hello</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;hello!&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">hello_for_later</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">asynchronous_hello</span><span class="p">();</span><span class="w"> </span><span class="c1">// Nothing gets printed
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">        </span><span class="c1">// ... ton of more code that can be run here
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">block_on</span><span class="p">(</span><span class="n">hello_for_later</span><span class="p">);</span><span class="w"> </span><span class="c1">// &#34;hello!&#34; gets printed
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>So with that you are set for the rest of the post, async-await makes it easy to
 write asynchronous code. Rust it&rsquo;s not a mature language so for some time didn&rsquo;t
@@ -270,8 +287,8 @@ the function.</p>
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">return_ten</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="kt">u64</span> <span class="p">{</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">return_ten</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="kt">u64</span> <span class="p">{</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>To run that code you will need an executor or the await keyword. For that we
 will use the futures library. That comes with multiple abstractions to work with
@@ -282,9 +299,9 @@ async-await. Here you have an example of both methods:</p>
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="p">[</span><span class="nx">dependencies</span><span class="p">]</span>
-<span class="nx">futures</span> <span class="p">=</span> <span class="s2">&#34;0.3&#34;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl"><span class="p">[</span><span class="nx">dependencies</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nx">futures</span> <span class="p">=</span> <span class="s2">&#34;0.3&#34;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -306,23 +323,23 @@ async-await. Here you have an example of both methods:</p>
 </span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">futures</span>::<span class="n">executor</span>::<span class="n">block_on</span><span class="p">;</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">return_ten</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="kt">u64</span> <span class="p">{</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="p">}</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">await_for_ten_or_return_zero</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="kt">u64</span> <span class="p">{</span><span class="w">
-</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">return_ten</span><span class="p">().</span><span class="k">await</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">        </span><span class="mi">10</span><span class="w">
-</span><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">        </span><span class="mi">0</span><span class="w">
-</span><span class="w">    </span><span class="p">}</span><span class="w">
-</span><span class="w"></span><span class="p">}</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span><span class="w">   </span><span class="kd">let</span><span class="w"> </span><span class="n">ten</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">block_on</span><span class="p">(</span><span class="n">await_for_ten</span><span class="p">());</span><span class="w">
-</span><span class="w">   </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;Finally {} !&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ten</span><span class="p">)</span><span class="w"> </span><span class="c1">// &#34;Finally 10 !&#34; is printed
-</span><span class="c1"></span><span class="p">}</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">futures</span>::<span class="n">executor</span>::<span class="n">block_on</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">return_ten</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="kt">u64</span> <span class="p">{</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">await_for_ten_or_return_zero</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="kt">u64</span> <span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">return_ten</span><span class="p">().</span><span class="k">await</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="mi">10</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="mi">0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="kd">let</span><span class="w"> </span><span class="n">ten</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">block_on</span><span class="p">(</span><span class="n">await_for_ten</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;Finally {} !&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">ten</span><span class="p">)</span><span class="w"> </span><span class="c1">// &#34;Finally 10 !&#34; is printed
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>We are using the <code>block_on</code> executor on the main function because the await
 keyword can only be used inside async functions. <code>await_for_ten_or_return_zero</code>
@@ -344,14 +361,14 @@ order:</p>
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">futures</span>::<span class="n">join</span><span class="p">;</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">a_and_b</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">        </span><span class="c1">// join! just works inside async functions
-</span><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;a&#39;</span><span class="w"> </span><span class="p">};</span><span class="w">
-</span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;b&#39;</span><span class="w"> </span><span class="p">};</span><span class="w">
-</span><span class="w">    </span><span class="n">join</span><span class="o">!</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span><span class="w"> </span><span class="c1">// (&#39;a&#39;, &#39;b&#39;)
-</span><span class="c1"></span><span class="p">}</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">futures</span>::<span class="n">join</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">a_and_b</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">        </span><span class="c1">// join! just works inside async functions
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;a&#39;</span><span class="w"> </span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;b&#39;</span><span class="w"> </span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">join</span><span class="o">!</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span><span class="w"> </span><span class="c1">// (&#39;a&#39;, &#39;b&#39;)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>One thing to mentoin is that in Rust the async-await implementation it&rsquo;s lazy,
 that means that the code will not run on the background and wait for the await,
@@ -389,11 +406,11 @@ and <a href="https://github.com/tokio-rs/tokio"><code>tokio</code></a> for the a
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="p">[</span><span class="nx">dependencies</span><span class="p">]</span>
-<span class="nx">reqwest</span> <span class="p">=</span> <span class="p">{</span> <span class="nx">version</span> <span class="p">=</span> <span class="s2">&#34;0.11&#34;</span> <span class="p">}</span>
-<span class="nx">html5ever</span> <span class="p">=</span> <span class="s2">&#34;*&#34;</span>
-<span class="nx">tokio</span> <span class="p">=</span> <span class="p">{</span> <span class="nx">version</span> <span class="p">=</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="nx">features</span> <span class="p">=</span> <span class="p">[</span><span class="s2">&#34;full&#34;</span><span class="p">]</span> <span class="p">}</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl"><span class="p">[</span><span class="nx">dependencies</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nx">reqwest</span> <span class="p">=</span> <span class="p">{</span> <span class="nx">version</span> <span class="p">=</span> <span class="s2">&#34;0.11&#34;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nx">html5ever</span> <span class="p">=</span> <span class="s2">&#34;*&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">tokio</span> <span class="p">=</span> <span class="p">{</span> <span class="nx">version</span> <span class="p">=</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="nx">features</span> <span class="p">=</span> <span class="p">[</span><span class="s2">&#34;full&#34;</span><span class="p">]</span> <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div>
 
@@ -472,13 +489,17 @@ and <a href="https://github.com/tokio-rs/tokio"><code>tokio</code></a> for the a
 </script>
 <script>
     document.getElementById("theme-toggle").addEventListener("click", () => {
+        const message = { type: 'set-theme', theme: "github-dark" };
         if (document.body.className.includes("dark")) {
             document.body.classList.remove('dark');
+            message.theme = 'github-light';
             localStorage.setItem("pref-theme", 'light');
         } else {
             document.body.classList.add('dark');
             localStorage.setItem("pref-theme", 'dark');
         }
+        const iframe = document.querySelector('.utterances-frame');
+        iframe.contentWindow.postMessage(message, 'https://utteranc.es');
     })
 
 </script>
