@@ -92,30 +92,13 @@ rel="icon" type="image/png" sizes="16x16" href="http://marcelarie.github.io/favi
 
 <body class="list" id="top">
 <script>
-function waitForElm(selector) {
-    return new Promise(resolve => {
-        if (document.querySelector(selector)) { return resolve(document.querySelector(selector)); }
-        const observer = new MutationObserver(mutations => { if (document.querySelector(selector)) { resolve(document.querySelector(selector)); observer.disconnect(); } });
-        observer.observe(document.body, { childList: true, subtree: true });
-    });
-}
-waitForElm('.utterances-frame').then((frame) => {
-    const iframe = document.querySelector('.utterances-frame');
-    const message = { type: 'set-theme', theme: "github-dark" };
     if (localStorage.getItem("pref-theme") === "dark") {
         document.body.classList.add('dark');
     } else if (localStorage.getItem("pref-theme") === "light") {
         document.body.classList.remove('dark')
-        message.theme = 'github-light';
     } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.body.classList.add('dark');
-        message.theme = 'github-dark';
     }
-    iframe.contentWindow.postMessage(
-        message,
-        'https://utteranc.es'
-    );
-});
 
 </script>
 
@@ -302,7 +285,10 @@ So for example this will be synchronous code:
 </script>
 <script>
     document.getElementById("theme-toggle").addEventListener("click", () => {
-        const message = { type: 'set-theme', theme: "github-dark" };
+        const message = {
+            type: 'set-theme',
+            theme: "github-dark"
+        };
         if (document.body.className.includes("dark")) {
             document.body.classList.remove('dark');
             message.theme = 'github-light';
