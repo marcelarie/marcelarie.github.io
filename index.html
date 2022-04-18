@@ -101,6 +101,35 @@ rel="icon" type="image/png" sizes="16x16" href="http://marcelarie.github.io/favi
     }
 
 </script>
+<script>
+function waitForElm(selector) {
+    return new Promise(resolve => {
+        if (document.querySelector(selector)) {
+            return resolve(document.querySelector(selector));
+        }
+        const observer = new MutationObserver(mutations => {
+            if (document.querySelector(selector)) {
+                resolve(document.querySelector(selector));
+                observer.disconnect();
+            }
+        });
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    });
+}
+if ( localStorage.getItem("pref-theme") ) {
+    const message = { type: 'set-theme' };
+    const prefThemeOptions = { dark: 'github-dark', light: 'github-light' };
+
+    message.theme = prefThemeOptions[ localStorage.getItem("pref-theme") ];
+    waitForElm('.utterances-frame-x').then((iframe) => {
+        iframe.setAttribute('theme', message.theme);
+    });
+}
+
+</script>
 
 <header class="header">
     <nav class="nav">
